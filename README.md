@@ -97,6 +97,10 @@ claude mcp add eventor -- eventor-mcp
 Upgrade with `uv tool upgrade eventor-mcp`, remove with
 `uv tool uninstall eventor-mcp`.
 
+If `uv` warns that its tool bin directory isn't on your `PATH`, run
+`uv tool update-shell` and restart your shell before `eventor-mcp` (or
+`claude mcp add ... -- eventor-mcp`) will resolve.
+
 ## Tools
 
 | Tool | Auth | Notes |

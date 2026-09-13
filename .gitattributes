@@ -1,0 +1,26 @@
+# Normalize all text files to LF in the repo, regardless of platform.
+# This avoids the "LF will be replaced by CRLF" warnings on Windows and
+# keeps line endings consistent across Windows/Linux/macOS contributors.
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.toml  text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.sh    text eol=lf
+*.gitattributes text eol=lf
+*.gitignore     text eol=lf
+
+# Windows-native scripts keep CRLF.
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files: never touch line endings.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary

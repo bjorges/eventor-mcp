@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "eventor": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "eventor_mcp.server"]
+    }
+  }
+}

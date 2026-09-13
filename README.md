@@ -58,12 +58,23 @@ This starts the server on stdio, ready for an MCP client to connect.
 
 ## Registering with Claude Code
 
+This repo ships a project-scoped `.mcp.json`, so opening this folder in
+Claude Code (or the Claude desktop app's Code tab) offers to enable the
+`eventor` server automatically -- you'll see a one-time approval prompt
+(project MCP servers can run arbitrary commands, so Claude Code always
+asks first). It runs `uv run python -m eventor_mcp.server` with this
+project directory as its working directory, so it picks up your local
+`.env` on its own; no credentials are stored in `.mcp.json`.
+
+To register it globally instead (available from any directory, not just
+this one), use the CLI:
+
 ```bash
 claude mcp add eventor -- uv run --directory /path/to/eventor-mcp python -m eventor_mcp.server
 ```
 
-Make sure `EVENTOR_API_KEY` etc. are set in the environment Claude Code
-itself runs in -- not hardcoded anywhere in this repo.
+Either way, credentials come from your environment / local `.env` --
+never hardcode them anywhere in this repo.
 
 ## Tools
 

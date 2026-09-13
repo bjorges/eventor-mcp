@@ -10,11 +10,17 @@ so an MCP client (including an LLM) never sees the raw secret values.
 
 from __future__ import annotations
 
+from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 
 from . import parsers
 from .client import EventorApiError, EventorClient
 from .config import ConfigError
+
+# Loads .env for local development only, if present. In production use, an
+# MCP client (e.g. Claude Code) should set these in the environment it
+# launches this server with instead.
+load_dotenv()
 
 mcp = FastMCP("eventor")
 

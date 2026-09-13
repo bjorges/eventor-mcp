@@ -99,11 +99,20 @@ def parse_entry_changes(doc: dict) -> list[dict]:
     return result
 
 
-def _control_card(node: dict) -> str | None:
+def _control_cards(node: dict) -> list[dict]:
+    """Return every control card as {"system": ..., "number": ...}.
+
+    Confirmed against live data that "Emit" and "emiTag" are *distinct*
+    punching systems in Eventor, not a spelling variant of the same thing
+    (a club may use both). So every card is kept, tagged with its own
+    system, rather than collapsed into a single guessed "the" card.
+    """
+    cards = []
     for cc in _as_list(node.get("ControlCard")):
-        if isinstance(cc, dict) and cc.get("@punchingSystem") == "Emit":
-            return _text(cc)
-    return None
+        if not isinstance(cc, dict):
+            continue
+        cards.append({"system": cc.get("@punchingSystem"), "number": _text(cc)})
+    return cards
 
 
 def parse_entries(doc: dict) -> list[dict]:
@@ -123,7 +132,7 @@ def parse_entries(doc: dict) -> list[dict]:
                 "club_id": _text(org.get("Id")),
                 "club_name": _text(org.get("Name")),
                 "class_name": _text((pe.get("Class") or {}).get("Name")),
-                "control_card": _control_card(pe),
+                "control_cards": _control_cards(pe),
             }
         )
     return result
@@ -145,7 +154,7 @@ def parse_competitors(doc: dict) -> list[dict]:
                 "birth_date": _text(person.get("BirthDate")),
                 "club_id": _text(org.get("Id")),
                 "club_name": _text(org.get("Name")),
-                "control_card": _control_card(c),
+                "control_cards": _control_cards(c),
             }
         )
     return result

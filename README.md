@@ -29,16 +29,17 @@ compromised and regenerate it in Eventor under Klubben -> Klubbinnstillinger.**
 
 ## Setup
 
-```bash
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
-pip install -e ".[dev]"
+```bash
+uv sync --extra dev
 cp .env.example .env   # then fill in your own values in .env
 ```
+
+`uv sync` creates `.venv` and installs everything pinned in `uv.lock`. Run
+project commands with `uv run <command>` (e.g. `uv run pytest`), or activate
+the environment yourself (`.venv\Scripts\activate` on Windows,
+`source .venv/bin/activate` on macOS/Linux) if you prefer.
 
 Two separate credential types are used by Eventor's API:
 
@@ -50,7 +51,7 @@ Two separate credential types are used by Eventor's API:
 ## Running
 
 ```bash
-python -m eventor_mcp.server
+uv run python -m eventor_mcp.server
 ```
 
 This starts the server on stdio, ready for an MCP client to connect.
@@ -58,12 +59,11 @@ This starts the server on stdio, ready for an MCP client to connect.
 ## Registering with Claude Code
 
 ```bash
-claude mcp add eventor -- python -m eventor_mcp.server
+claude mcp add eventor -- uv run --directory /path/to/eventor-mcp python -m eventor_mcp.server
 ```
 
-Run this from an activated virtualenv (or use the full path to the venv's
-`python`), and make sure `EVENTOR_API_KEY` etc. are set in the environment
-Claude Code itself runs in -- not hardcoded anywhere in this repo.
+Make sure `EVENTOR_API_KEY` etc. are set in the environment Claude Code
+itself runs in -- not hardcoded anywhere in this repo.
 
 ## Tools
 
@@ -85,7 +85,7 @@ this project does not (yet) build that XML for you.
 ## Testing
 
 ```bash
-pytest
+uv run pytest
 ```
 
 ## Limitations / TODO

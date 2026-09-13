@@ -6,7 +6,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 dependencies = [
-    "mcp>=1.2.0",
+    # Pinned below 2.0: mcp 2.x renamed FastMCP to MCPServer with a
+    # different API. This code uses the FastMCP decorator pattern from 1.x.
+    "mcp>=1.2.0,<2.0.0",
     "httpx>=0.27.0",
     "xmltodict>=0.13.0",
     "python-dotenv>=1.0.0",

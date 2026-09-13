@@ -76,6 +76,27 @@ claude mcp add eventor -- uv run --directory /path/to/eventor-mcp python -m even
 Either way, credentials come from your environment / local `.env` --
 never hardcode them anywhere in this repo.
 
+### Installing as a standalone tool (no clone needed)
+
+If you just want to run the server -- not modify or test the code -- you
+don't need a checkout at all:
+
+```bash
+uv tool install git+https://github.com/bjorges/eventor-mcp
+```
+
+This puts an `eventor-mcp` command on your PATH, in its own isolated
+environment. There's no project directory here for `.env` auto-loading to
+find, so set credentials as real environment variables instead (see
+`.env.example` for the full list), then register it:
+
+```bash
+claude mcp add eventor -- eventor-mcp
+```
+
+Upgrade with `uv tool upgrade eventor-mcp`, remove with
+`uv tool uninstall eventor-mcp`.
+
 ## Tools
 
 | Tool | Auth | Notes |
@@ -83,7 +104,7 @@ never hardcode them anywhere in this repo.
 | `list_events(from_date, to_date, organisation_ids=None)` | API key | Dates as `YYYY-MM-DD` |
 | `list_organisations()` | API key | All clubs/districts/federations |
 | `get_event_classes(event_id)` | Username/password | Classes for one event |
-| `get_event_entries(event_id)` | Username/password | Full entries: name, class, club, control card |
+| `get_event_entries(event_id)` | Username/password | Full entries: name, class, club, control cards (a list -- Emit, emiTag and SI are distinct systems and a person can have more than one) |
 | `get_entry_changes(event_id)` | Username/password | Just entry/modify timestamps |
 | `get_competitors(organisation_ids)` | Username/password | Registered club members |
 | `import_startlist(iof_xml)` | Username/password | **Writes to Eventor** -- publishes a start list |
